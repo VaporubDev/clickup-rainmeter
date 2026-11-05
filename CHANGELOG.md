@@ -1,5 +1,11 @@
 # Histórico de alterações
 
+## 05/11/2026 — Correção de carregamento
+
+- Consulta alterada para o endpoint de tarefas por lista da API do ClickUp.
+- Configuração passou a usar `ListID`, obtido pelo link copiado da lista.
+- Erros de configuração e conexão agora aparecem no painel.
+
 ## 03/11/2026 — Publicação e documentação
 
 - README reorganizado no padrão dos projetos da VaporubDev.

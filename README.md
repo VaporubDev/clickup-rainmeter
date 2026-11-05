@@ -82,10 +82,10 @@ No ClickUp:
 Nunca compartilhe esse token nem o publique no GitHub. Se um token real for
 exposto, revogue-o imediatamente no ClickUp e gere outro.
 
-### 2. Encontrar o `TeamID`
+### 2. Encontrar o `ListID`
 
-O `TeamID` é o identificador numérico do seu workspace/equipe no ClickUp.
-Ele pode ser obtido pela API do ClickUp ou pela documentação da conta.
+Abra o menu `...` da lista no ClickUp e escolha **Copiar link**. O `ListID`
+é o número que aparece depois de `/li/` no link copiado.
 
 ### 3. Editar as variáveis
 
@@ -93,16 +93,16 @@ Abra `ClickUp.ini` e substitua os valores de exemplo:
 
 ```ini
 APIToken=SEU_TOKEN_PESSOAL_DO_CLICKUP
-TeamID=SEU_TEAM_ID
-ClickUpAppUrl=clickup://SEU_TEAM_ID/v/l/SEU_LINK_DO_CLICKUP
+ListID=SEU_LIST_ID
+ClickUpAppUrl=https://app.clickup.com/SEU_TEAM_ID/v/li/SEU_LIST_ID
 ```
 
 O arquivo distribuído neste repositório contém apenas marcadores de posição
 para evitar o vazamento de credenciais.
 
 `ClickUpAppUrl` é opcional para a consulta das tarefas, mas é usado pelo botão
-`+ Adicionar Tarefa`. Para abrir uma página específica, substitua o valor pelo
-link profundo (`clickup://...`) correspondente ao seu workspace ou lista.
+`+ Adicionar Tarefa`. Cole nesse campo o link copiado da lista. O valor padrão
+abre o ClickUp sem tentar abrir uma lista inexistente.
 
 ## Como executar
 
@@ -111,7 +111,7 @@ link profundo (`clickup://...`) correspondente ao seu workspace ou lista.
 - Clique em `+ Adicionar Tarefa` para abrir o ClickUp.
 - A atualização automática acontece a cada 20 segundos.
 
-As tarefas são buscadas no endpoint de tarefas do workspace, incluindo tarefas
+As tarefas são buscadas no endpoint de tarefas da lista, incluindo tarefas
 fechadas e subtarefas. O skin considera como concluídas as tarefas com status
 `closed`, `done`, `complete` ou cujo nome do status contenha `conclu`. Todas as
 outras são exibidas como pendentes.
@@ -123,7 +123,7 @@ outras são exibidas como pendentes.
 Confira:
 
 - se o token está correto e ainda ativo;
-- se o `TeamID` pertence ao workspace correto;
+- se o `ListID` pertence a uma lista à qual sua conta tem acesso;
 - se o computador tem acesso à internet;
 - se o PowerShell está disponível no Windows;
 - se o Rainmeter foi atualizado depois da alteração do arquivo.
@@ -141,15 +141,16 @@ Depois, abra **Gerenciar**, clique em **Atualizar tudo**, selecione
 
 ### O botão não abre o ClickUp
 
-Verifique o valor de `ClickUpAppUrl`. O protocolo `clickup://` precisa estar
-associado ao aplicativo ClickUp Desktop. Como alternativa, use um link web do
-ClickUp no lugar do link profundo.
+Verifique se `ClickUpAppUrl` é o link copiado diretamente da lista no ClickUp.
+Como alternativa, use `https://app.clickup.com/` para abrir o ClickUp sem
+selecionar uma lista.
 
 ## Estrutura do projeto
 
 ```text
 ClickUp/
 ├── ClickUp.ini  # Configuração, consultas à API e interface do skin
+├── GetClickUpTasks.ps1 # Consulta e formatação das tarefas
 ├── CHANGELOG.md # Histórico de evolução do projeto
 └── README.md    # Documentação
 ```
