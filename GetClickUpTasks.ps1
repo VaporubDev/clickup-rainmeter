@@ -15,6 +15,16 @@ if ([string]::IsNullOrWhiteSpace($ApiToken) -or
     exit 0
 }
 
+$ListId = $ListId.Trim()
+if ($ListId -match '/li/(\d+)') {
+    $ListId = $Matches[1]
+}
+
+if ($ListId -notmatch '^\d+$') {
+    'ListID invalido: informe apenas o numero da lista ou o link da lista'
+    exit 0
+}
+
 try {
     $headers = @{ Authorization = $ApiToken }
     $uri = "https://api.clickup.com/api/v2/list/$ListId/task?include_closed=true&subtasks=true"
@@ -65,6 +75,27 @@ try {
 } catch {
     $statusCode = $_.Exception.Response.StatusCode.value__
     if ($statusCode) {
+        $details = $null
+        $responseStream = $_.Exception.Response.GetResponseStream()
+        if ($responseStream) {
+            $reader = [System.IO.StreamReader]::new($responseStream)
+            $details = $reader.ReadToEnd()
+            $reader.Dispose()
+            $responseStream.Dispose()
+        }
+
+        if ($details) {
+            try {
+                $apiError = $details | ConvertFrom-Json
+                if ($apiError.err) {
+                    "Erro API HTTP $statusCode`: $($apiError.err)"
+                    exit 0
+                }
+            } catch {
+                # Keep the HTTP status when the response is not JSON.
+            }
+        }
+
         "Erro API HTTP $statusCode"
     } else {
         'Erro de conexao com o ClickUp'

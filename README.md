@@ -85,7 +85,8 @@ exposto, revogue-o imediatamente no ClickUp e gere outro.
 ### 2. Encontrar o `ListID`
 
 Abra o menu `...` da lista no ClickUp e escolha **Copiar link**. O `ListID`
-é o número que aparece depois de `/li/` no link copiado.
+é o número que aparece depois de `/li/` no link copiado. O script também aceita
+o link completo da lista nesse campo.
 
 ### 3. Editar as variáveis
 
@@ -124,6 +125,7 @@ Confira:
 
 - se o token está correto e ainda ativo;
 - se o `ListID` pertence a uma lista à qual sua conta tem acesso;
+- se o `ListID` contém apenas o número da lista ou um link copiado da lista;
 - se o computador tem acesso à internet;
 - se o PowerShell está disponível no Windows;
 - se o Rainmeter foi atualizado depois da alteração do arquivo.
