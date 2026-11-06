@@ -1,6 +1,6 @@
 # ClickUp &bull; Painel de tarefas no Rainmeter 
 
-##EM DESENVOLVIMENTO
+## EM DESENVOLVIMENTO
 
 O **ClickUp para Rainmeter** é um skin para [Rainmeter](https://www.rainmeter.net/)
 que exibe, diretamente na área de trabalho, as tarefas concluídas e pendentes do
